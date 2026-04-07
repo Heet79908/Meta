@@ -1,0 +1,16 @@
+[project]
+name = "sql-data-analysis-openenv"
+version = "1.0.0"
+description = "SQL Data Analysis OpenEnv environment"
+authors = [
+    { name="Heet Panchal", email="heet.panchal@iitgn.ac.in" }
+]
+requires-python = ">=3.10"
+
+dependencies = [
+    "fastapi>=0.115.0",
+    "uvicorn[standard]>=0.30.6",
+    "pydantic>=2.10.0",
+    "openai>=1.35.14",
+    "requests>=2.32.3"
+]
