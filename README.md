@@ -1,3 +1,13 @@
+---
+title: SQL Data Analysis OpenEnv
+emoji: 🗄️
+colorFrom: blue
+colorTo: green
+sdk: docker
+pinned: false
+app_port: 7860
+---
+
 # SQL Data Analysis — OpenEnv Environment
 
 A real-world **SQL data analysis** environment for the OpenEnv hackathon.  
