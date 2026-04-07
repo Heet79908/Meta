@@ -3,7 +3,7 @@ name = "sql-data-analysis-openenv"
 version = "1.0.0"
 description = "SQL Data Analysis OpenEnv environment"
 authors = [
-    { name="Heet Panchal", email="heet.panchal@iitgn.ac.in" }
+    { name = "Heet Panchal", email = "heet.panchal@iitgn.ac.in" }
 ]
 requires-python = ">=3.10"
 
@@ -12,14 +12,9 @@ dependencies = [
     "uvicorn[standard]>=0.30.6",
     "pydantic>=2.10.0",
     "openai>=1.35.14",
-<<<<<<< HEAD
     "requests>=2.32.3",
     "openenv-core>=0.2.0"
 ]
 
 [project.scripts]
 server = "server.app:main"
-=======
-    "requests>=2.32.3"
-]
->>>>>>> e2bd4d5f0bebe74ae6087bebe61d12c07b41a92b
