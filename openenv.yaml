@@ -1,0 +1,106 @@
+name: sql-data-analysis-env
+version: "1.0.0"
+description: >
+  A real-world SQL data analysis environment where an AI agent writes
+  SELECT queries to answer progressively harder business intelligence tasks.
+  Covers JOINs, aggregations, filtering, subqueries, and window functions
+  over a realistic corporate database (employees, orders, sales, customers).
+
+author: Heet Panchal
+contact: heet.panchal@iitgn.ac.in
+
+tasks:
+  - id: task_easy_dept_salary
+    difficulty: easy
+    description: >
+      Calculate the total salary expense per department.
+      Return department name and total salary, ordered from highest to lowest.
+
+  - id: task_medium_top_customers
+    difficulty: medium
+    description: >
+      Find the top 3 customers by total spending on COMPLETED orders only.
+      Return customer name and their total order value, ordered highest first.
+
+  - id: task_hard_best_month_by_category
+    difficulty: hard
+    description: >
+      For each product category, identify the calendar month (YYYY-MM) with
+      the highest total sales amount. Return category, best month, and that
+      month's total sales.
+
+api:
+  reset:
+    method: POST
+    path: /reset
+    body:
+      task_id: string (optional)
+    returns:
+      session_id: string
+      task_id: string
+      task_description: string
+      schema: string
+      observation: object
+      done: boolean
+      reward: float
+
+  step:
+    method: POST
+    path: /step
+    body:
+      session_id: string
+      action:
+        sql: string   # SELECT query to execute
+    returns:
+      session_id: string
+      observation:
+        result: object      # rows, columns, row_count
+        feedback: string
+        steps_remaining: int
+      reward: float         # 0.0 – 1.0
+      done: boolean
+      info: object
+
+  state:
+    method: GET
+    path: /state
+    params:
+      session_id: string
+    returns:
+      session_id: string
+      task_id: string
+      task_description: string
+      schema: string
+      steps: int
+      max_steps: int
+      done: boolean
+      reward: float
+      last_result: object
+
+action_space:
+  type: text
+  description: A SQL SELECT query string
+
+observation_space:
+  type: object
+  fields:
+    result:
+      rows: list of dicts
+      columns: list of strings
+      row_count: int
+    feedback: string
+    steps_remaining: int
+
+reward:
+  range: [0.0, 1.0]
+  description: >
+    Partial credit for structural correctness (right columns, joins, filters).
+    Full credit for complete, correctly ordered, correctly filtered results.
+    Small bonus for solving in fewer steps.
+
+environment:
+  runtime: python3.11
+  framework: fastapi
+  database: sqlite3 (in-memory seed on startup)
+  max_steps_per_episode: 10
+  max_inference_runtime_minutes: 20
